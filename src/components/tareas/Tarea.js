@@ -19,7 +19,7 @@ const Tarea = ({ tarea }) => {
         <button type="button" className="btn btn-primario">
           Editar
         </button>
-        <button type="button" className="btn btn-secundario">
+        <button type="button" className="btn btn-eliminar">
           Eliminar
         </button>
       </div>
