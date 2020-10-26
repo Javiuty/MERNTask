@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import proyectoContext from "../../context/proyectos/proyectoContext";
 
 const NuevoProyecto = () => {
+  // Obtener el state del formulario
+  const proyectosContext = useContext(proyectoContext);
+  const { formulario, mostrarFormulario, agregarProyecto } = proyectosContext;
+
   // state para Proyecto
   const [proyecto, guardarProyecto] = useState({
     nombre: "",
@@ -23,34 +28,49 @@ const NuevoProyecto = () => {
     e.preventDefault();
 
     // Validar el proyecto
+    if (nombre === "") {
+      return;
+    }
 
     // Agregar el state
+    agregarProyecto(proyecto);
 
     // Reiniciar el form
   };
 
+  // Mostrar el formulario
+  const onClickFormulario = () => {
+    mostrarFormulario();
+  };
+
   return (
     <>
-      <button type="button" className="btn btn-block btn-primario">
+      <button
+        type="button"
+        className="btn btn-block btn-primario"
+        onClick={onClickFormulario}
+      >
         Nuevo Proyecto
       </button>
 
-      <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProyecto}>
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Nombre Proyecto"
-          name="nombre"
-          value={nombre}
-          onChange={onChangeProyecto}
-        />
+      {formulario ? (
+        <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProyecto}>
+          <input
+            type="text"
+            className="input-text"
+            placeholder="Nombre Proyecto"
+            name="nombre"
+            value={nombre}
+            onChange={onChangeProyecto}
+          />
 
-        <input
-          type="submit"
-          className="btn btn-primario btn-block"
-          value="Agregar Proyecto"
-        />
-      </form>
+          <input
+            type="submit"
+            className="btn btn-primario btn-block"
+            value="Agregar Proyecto"
+          />
+        </form>
+      ) : null}
     </>
   );
 };
